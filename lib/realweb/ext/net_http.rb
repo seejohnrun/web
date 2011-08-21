@@ -3,29 +3,14 @@ require 'net/https'
 require 'stringio'
 
 require File.dirname(__FILE__) + '/../status_codes'
-
-module RealWeb
-
-  module FakeHTTPResponse
-
-    def read_body(dist = nil, &block)
-      yield @body if block_given?
-      @body
-    end
-
-    def cached?
-      !!@cached
-    end
-
-  end
-
-end
+require File.dirname(__FILE__) + '/../http_response'
 
 module Net
 
   class BufferedIO
 
     # Catch the socket
+    # This method was largely influenced by FakeWeb
     def initialize_with_realweb(io, debug_output = nil)
       @read_timeout = 60
       @rbuf = ''
@@ -83,7 +68,7 @@ module Net
             response[name] = value
           end
         end
-        response.extend RealWeb::FakeHTTPResponse
+        response.extend RealWeb::HTTPResponse
         response.instance_variable_set(:@body, realweb_response.body)
         response.instance_variable_set(:@read, true)
         yield response if block_given?
@@ -98,13 +83,13 @@ module Net
           response.each do |key, value|
             headers[key] = value
           end
-          response.extend RealWeb::FakeHTTPResponse
+          response.extend RealWeb::HTTPResponse
           realweb.record response.code.to_i, response.body, headers
           yield response if block_given?
           response
         else
           response = request_without_realweb(request, body, &block)
-          response.extend RealWeb::FakeHTTPResponse
+          response.extend RealWeb::HTTPResponse
           response
         end
       end
