@@ -20,7 +20,7 @@ Net::HTTP.get_print 'http://google.com' # from cache!
 If the cache class you're using supports expiration (redis does), you can also do
 
 ``` ruby
-RealWeb.register /google\.com/, :expire => 2000
+RealWeb.register /google\.com/, :expire => 2
 ```
 
 To automatically expire requests to `google.com` every 2 seconds

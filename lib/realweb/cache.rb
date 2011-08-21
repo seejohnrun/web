@@ -14,7 +14,7 @@ module RealWeb
 
     def set(key, value, expires = nil)
       @redis.set(key, value)
-      @redis.expire key, expires / 1000 if expires
+      @redis.expire key, expires if expires
     end
 
   end

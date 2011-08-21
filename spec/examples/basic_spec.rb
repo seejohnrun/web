@@ -9,7 +9,7 @@ describe RealWeb do
   describe 'with 1s expired url' do
     
     before :each do
-      RealWeb.register /google\.com/, :expire => 1000
+      RealWeb.register /google\.com/, :expire => 1
     end
 
     it 'should expire a key after 1s' do
