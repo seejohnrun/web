@@ -40,8 +40,8 @@ RealWeb.cache = RealWeb::MemcachedCache.new
 
 ## TODO
 
-* More adapters
-* Allow settings to `register` based on request type and such
+* More library adapters - `typhoeus`, `curb`, `patron`, etc
+* Allow settings to `#register` based on request type and such, or proc
 
 ## Author
 
