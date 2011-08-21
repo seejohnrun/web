@@ -13,7 +13,8 @@ module Web
     attr_writer :cache
 
     # register a url to cache
-    def register(regex, options = {})
+    def register(method, regex, options = {})
+      options[:method] = method
       options[:regex] = regex
       registered << options
     end

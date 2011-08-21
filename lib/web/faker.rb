@@ -12,12 +12,13 @@ module Web
       @cache = Web.cache
       # keep these around
       @url = url
+      @method = method
     end
 
     # whether or not this is a key we want
     def desired?
       @match = Web.registered.detect do |opt|
-        opt[:regex] =~ @url
+        opt[:regex] =~ @url && opt[:method] === @method
       end
     end
 

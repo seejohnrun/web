@@ -10,7 +10,7 @@ describe Web do
   describe 'with 1s expired url' do
     
     before :each do
-      Web.register /google\.com/, :expire => 1
+      Web.register :get, /google\.com/, :expire => 1
     end
 
     it 'should expire a key after 1s' do
@@ -28,7 +28,7 @@ describe Web do
   describe 'with registered url' do
 
     before :each do
-      Web.register /google\.com/
+      Web.register :get, /google\.com/
     end
 
     it 'should get the uncached result the first time' do

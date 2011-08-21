@@ -3,13 +3,13 @@
 Web is a great way to automatically record HTTP responses in a cache so you don't overwhelm an external service.
 
 ``` ruby
-Web.register /google\.com/
+Web.register :get, /google\.com/
 ```
 
 By doing that, any request (via Net/HTTP - more adapters coming soon) is cached (in redis by default) and will return as if it hit the web service directly.
 
 ``` ruby
-Web.register /google\.com/
+Web.register :get, /google\.com/
 Net::HTTP.get_print 'http://google.com' # from source
 Net::HTTP.get_print 'http://google.com' # from cache!
 ```
@@ -19,7 +19,7 @@ Net::HTTP.get_print 'http://google.com' # from cache!
 If the cache class you're using supports expiration (redis does), you can also do
 
 ``` ruby
-Web.register /google\.com/, :expire => 2
+Web.register :get, /google\.com/, :expire => 2
 ```
 
 To automatically expire requests to `google.com` every 2 seconds
@@ -47,7 +47,6 @@ gem install web
 ## TODO
 
 * More library adapters - `typhoeus`, `curb`, `patron`, etc
-* Allow settings to `#register` based on request type and such, or proc
 
 ## Author
 
