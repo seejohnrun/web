@@ -13,17 +13,17 @@ describe Web do
     end
 
     it 'should not expire immediately' do
-      response = Net::HTTP.get_response URI.parse 'http://google.com'
+      response = Net::HTTP.get_response REQUEST_URL
       response.should_not be_cached
-      response = Net::HTTP.get_response URI.parse 'http://google.com'
+      response = Net::HTTP.get_response REQUEST_URL
       response.should be_cached
     end
 
     it 'should expire a key after 1s' do
-      response = Net::HTTP.get_response URI.parse 'http://google.com'
+      response = Net::HTTP.get_response REQUEST_URL
       response.should_not be_cached
       sleep 2
-      response = Net::HTTP.get_response URI.parse 'http://google.com'
+      response = Net::HTTP.get_response REQUEST_URL
       response.should_not be_cached
     end
 
@@ -36,33 +36,33 @@ describe Web do
     end
 
     it 'should get the uncached result the first time' do
-      response = Net::HTTP.get_response URI.parse 'http://google.com'
+      response = Net::HTTP.get_response REQUEST_URL
       response.should_not be_cached
     end
 
     it 'should get the cached result the second time' do
-      response = Net::HTTP.get_response URI.parse 'http://google.com'
-      response = Net::HTTP.get_response URI.parse 'http://google.com'
+      response = Net::HTTP.get_response REQUEST_URL
+      response = Net::HTTP.get_response REQUEST_URL
       response.should be_cached
     end
 
     it 'should have a cached response with the same code' do
-      response = Net::HTTP.get_response URI.parse 'http://google.com'
+      response = Net::HTTP.get_response REQUEST_URL
       code = response.code
-      response = Net::HTTP.get_response URI.parse 'http://google.com'
+      response = Net::HTTP.get_response REQUEST_URL
       response.should be_cached
       response.code.should == code
     end
 
     it 'should have same headers as the original response' do
-      response = Net::HTTP.get_response URI.parse 'http://google.com'
+      response = Net::HTTP.get_response REQUEST_URL
       headers = {}
       response.each do |key, value|
         headers[key] = value
       end
       headers.should_not be_empty
       # and the other one
-      response = Net::HTTP.get_response URI.parse 'http://google.com'
+      response = Net::HTTP.get_response REQUEST_URL
       response.should be_cached
       headers2 = {}
       response.each do |key, value|
@@ -73,15 +73,15 @@ describe Web do
     end
 
     it 'should be able to read the body of an uncached response' do
-      response = Net::HTTP.get_response URI.parse 'http://google.com'
+      response = Net::HTTP.get_response REQUEST_URL
       lambda do
         response.read_body
       end.should_not raise_error
     end
 
     it 'should be able to read the body of an cached response' do
-      response = Net::HTTP.get_response URI.parse 'http://google.com'
-      response = Net::HTTP.get_response URI.parse 'http://google.com'
+      response = Net::HTTP.get_response REQUEST_URL
+      response = Net::HTTP.get_response REQUEST_URL
       lambda do
         response.read_body
       end.should_not raise_error
@@ -90,15 +90,15 @@ describe Web do
   end
 
   it 'should be able to read the body of an unregistered response' do
-    response = Net::HTTP.get_response URI.parse 'http://google.com'
+    response = Net::HTTP.get_response REQUEST_URL
     lambda do
       response.read_body
     end.should_not raise_error
   end
 
   it 'should not cache things that are not registered' do
-    response = Net::HTTP.get_response URI.parse 'http://google.com'
-    response = Net::HTTP.get_response URI.parse 'http://google.com'
+    response = Net::HTTP.get_response REQUEST_URL
+    response = Net::HTTP.get_response REQUEST_URL
     response.should_not be_cached
   end
 
