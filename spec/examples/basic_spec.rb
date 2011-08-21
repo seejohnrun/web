@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 require 'redis'
 
-describe RealWeb do
+describe Web do
 
   before :each do
     Redis.new.flushdb
@@ -10,7 +10,7 @@ describe RealWeb do
   describe 'with 1s expired url' do
     
     before :each do
-      RealWeb.register /google\.com/, :expire => 1
+      Web.register /google\.com/, :expire => 1
     end
 
     it 'should expire a key after 1s' do
@@ -28,7 +28,7 @@ describe RealWeb do
   describe 'with registered url' do
 
     before :each do
-      RealWeb.register /google\.com/
+      Web.register /google\.com/
     end
 
     it 'should get the uncached result the first time' do

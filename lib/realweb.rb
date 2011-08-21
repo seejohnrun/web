@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/realweb/ext/net_http'
 require File.dirname(__FILE__) + '/realweb/faker'
 
-module RealWeb
+module Web
 
   # The adapters
   autoload :RedisCache, File.dirname(__FILE__) + '/realweb/cache/redis_cache'

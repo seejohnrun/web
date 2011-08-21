@@ -1,6 +1,6 @@
 require 'json'
 
-module RealWeb
+module Web
 
   # A class which represents data from a response
   class Response

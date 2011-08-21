@@ -1,6 +1,6 @@
 require 'redis'
 
-module RealWeb
+module Web
 
   # A basic cache interface, implemented with Redis
 

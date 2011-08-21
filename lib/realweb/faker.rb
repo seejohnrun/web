@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/response'
 
-module RealWeb
+module Web
 
   # A class for representing one faked response
   class Faker
@@ -9,14 +9,14 @@ module RealWeb
 
     def initialize(method, url, body, headers)
       @key = "#{method}:#{url}"
-      @cache = RealWeb.cache
+      @cache = Web.cache
       # keep these around
       @url = url
     end
 
     # whether or not this is a key we want
     def desired?
-      @match = RealWeb.registered.detect do |opt|
+      @match = Web.registered.detect do |opt|
         opt[:regex] =~ @url
       end
     end
@@ -24,7 +24,7 @@ module RealWeb
     # Given a response, marshall down and record in redis
     def record(code, body, headers)
       # save and return the response
-      res = RealWeb::Response.new code, body, headers
+      res = Web::Response.new code, body, headers
       # Allow expireation to be set
       expires = @match.has_key?(:expire) ? @match[:expire].to_i : nil
       cache.set(key, res.dump, expires)
@@ -32,10 +32,10 @@ module RealWeb
     end
 
     # Get the mashalled form from redis and reconstruct
-    # into a RealWeb::Response
+    # into a Web::Response
     def response_for
       if data = cache.get(key)
-        RealWeb::Response.load(data)
+        Web::Response.load(data)
       else
         nil
       end

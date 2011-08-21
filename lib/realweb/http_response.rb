@@ -1,4 +1,4 @@
-module RealWeb
+module Web
 
   module HTTPResponse
 

@@ -42,7 +42,7 @@ module Net
     class << self
 
       def socket_type_with_realweb
-        RealWeb::StubSocket
+        Web::StubSocket
       end
 
       alias_method :socket_type_without_realweb, :socket_type
@@ -57,7 +57,7 @@ module Net
       request.each do |key, value|
         headers[key] = value
       end
-      realweb = RealWeb::Faker.new request.method.downcase.to_sym, request_uri_as_string(request), body, headers
+      realweb = Web::Faker.new request.method.downcase.to_sym, request_uri_as_string(request), body, headers
       if realweb.desired? && realweb_response = realweb.response_for
         # turn the realweb response into a Net::HTTPResponse
         response = Net::HTTPResponse.send(:response_class, realweb_response.code.to_s).new('1.0', realweb_response.code.to_s, HTTP_STATUS_CODES[realweb_response.code])
@@ -68,7 +68,7 @@ module Net
             response[name] = value
           end
         end
-        response.extend RealWeb::HTTPResponse
+        response.extend Web::HTTPResponse
         response.instance_variable_set(:@body, realweb_response.body)
         response.instance_variable_set(:@read, true)
         yield response if block_given?
@@ -83,13 +83,13 @@ module Net
           response.each do |key, value|
             headers[key] = value
           end
-          response.extend RealWeb::HTTPResponse
+          response.extend Web::HTTPResponse
           realweb.record response.code.to_i, response.body, headers
           yield response if block_given?
           response
         else
           response = request_without_realweb(request, body, &block)
-          response.extend RealWeb::HTTPResponse
+          response.extend Web::HTTPResponse
           response
         end
       end

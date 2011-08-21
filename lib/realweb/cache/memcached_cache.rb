@@ -1,6 +1,6 @@
 require 'dalli'
 
-module RealWeb
+module Web
 
   # a basic cache interface, implemented with memcached
 
