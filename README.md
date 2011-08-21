@@ -38,6 +38,12 @@ Web.cache = Web::MemcachedCache.new
 * `RedisCache` - A cache backed by Redis
 * `MemcachedCache` - A cache backed by Memcached via Dalli
 
+## Installation
+
+``` bash
+gem install web
+```
+
 ## TODO
 
 * More library adapters - `typhoeus`, `curb`, `patron`, etc
