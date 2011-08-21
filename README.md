@@ -16,7 +16,7 @@ Net::HTTP.get_print 'http://google.com' # from cache!
 
 ## Auto-expiry
 
-If the cache class you're using supports expiration (redis does), you can also do
+You can also do
 
 ``` ruby
 Web.register :get, /google\.com/, :expire => 2
