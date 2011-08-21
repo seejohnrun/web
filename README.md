@@ -1,4 +1,4 @@
-# Web (in development)
+# Web
 
 Web is a great way to automatically record HTTP responses in a cache so you don't overwhelm an external service.
 
