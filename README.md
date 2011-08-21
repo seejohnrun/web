@@ -14,7 +14,6 @@ Net::HTTP.get_print 'http://google.com' # from source
 Net::HTTP.get_print 'http://google.com' # from cache!
 ```
 
-
 ## Auto-expiry
 
 If the cache class you're using supports expiration (redis does), you can also do
@@ -25,9 +24,16 @@ RealWeb.register /google\.com/, :expire => 2
 
 To automatically expire requests to `google.com` every 2 seconds
 
+## Different Caches
+
+There are multiple cache classes, and you can add your own.  By default, `RedisCache` and `MemcachedCache` are available.  Redis caching is the default, but if you want to change it you can do something like:
+
+``` ruby
+RealWeb.cache = RealWeb::MemcachedCache.new
+```
+
 ## TODO
 
-* Allow setting of cache and cache type more easily
 * More adapters
 * Allow settings to `register` based on request type and such
 

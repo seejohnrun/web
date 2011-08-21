@@ -1,3 +1,5 @@
+require 'json'
+
 module RealWeb
 
   # A class which represents data from a response

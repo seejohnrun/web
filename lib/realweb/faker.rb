@@ -9,7 +9,7 @@ module RealWeb
 
     def initialize(method, url, body, headers)
       @key = "#{method}:#{url}"
-      @cache = RealWeb::Cache.new
+      @cache = RealWeb.cache
       # keep these around
       @url = url
     end
