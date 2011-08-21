@@ -1,1 +1,1 @@
-require File.dirname(__FILE__) + '/../lib/realweb'
+require File.dirname(__FILE__) + '/../lib/web'

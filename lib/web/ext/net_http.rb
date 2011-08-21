@@ -11,7 +11,7 @@ module Net
 
     # Catch the socket
     # This method was largely influenced by FakeWeb
-    def initialize_with_realweb(io, debug_output = nil)
+    def initialize_with_web(io, debug_output = nil)
       @read_timeout = 60
       @rbuf = ''
       @debug_output = debug_output
@@ -32,8 +32,8 @@ module Net
       raise 'Unable to create local socket' unless @io
     end
 
-    alias_method :initialize_without_realweb, :initialize
-    alias_method :initialize, :initialize_with_realweb
+    alias_method :initialize_without_web, :initialize
+    alias_method :initialize, :initialize_with_web
 
   end
 
@@ -41,27 +41,27 @@ module Net
 
     class << self
 
-      def socket_type_with_realweb
+      def socket_type_with_web
         Web::StubSocket
       end
 
-      alias_method :socket_type_without_realweb, :socket_type
-      alias_method :socket_type, :socket_type_with_realweb
+      alias_method :socket_type_without_web, :socket_type
+      alias_method :socket_type, :socket_type_with_web
 
     end
 
-    def request_with_realweb(request, body = nil, &block)
+    def request_with_web(request, body = nil, &block)
       connect
       # get a faker
       headers = {}
       request.each do |key, value|
         headers[key] = value
       end
-      realweb = Web::Faker.new request.method.downcase.to_sym, request_uri_as_string(request), body, headers
-      if realweb.desired? && realweb_response = realweb.response_for
-        # turn the realweb response into a Net::HTTPResponse
-        response = Net::HTTPResponse.send(:response_class, realweb_response.code.to_s).new('1.0', realweb_response.code.to_s, HTTP_STATUS_CODES[realweb_response.code])
-        realweb_response.headers.each do |name, value|
+      web = Web::Faker.new request.method.downcase.to_sym, request_uri_as_string(request), body, headers
+      if web.desired? && web_response = web.response_for
+        # turn the web response into a Net::HTTPResponse
+        response = Net::HTTPResponse.send(:response_class, web_response.code.to_s).new('1.0', web_response.code.to_s, HTTP_STATUS_CODES[web_response.code])
+        web_response.headers.each do |name, value|
           if value.respond_to?(:each)
             value.each { |val| response.add_field(name, val) }
           else
@@ -69,34 +69,34 @@ module Net
           end
         end
         response.extend Web::HTTPResponse
-        response.instance_variable_set(:@body, realweb_response.body)
+        response.instance_variable_set(:@body, web_response.body)
         response.instance_variable_set(:@read, true)
         yield response if block_given?
         # respond cached
         response.instance_variable_set(:@cached, true)
         response
       else
-        # get the real response and store it if its desirable
-        if realweb.desired?
-          response = request_without_realweb(request, body)
+        # get the  response and store it if its desirable
+        if web.desired?
+          response = request_without_web(request, body)
           headers = {}
           response.each do |key, value|
             headers[key] = value
           end
           response.extend Web::HTTPResponse
-          realweb.record response.code.to_i, response.body, headers
+          web.record response.code.to_i, response.body, headers
           yield response if block_given?
           response
         else
-          response = request_without_realweb(request, body, &block)
+          response = request_without_web(request, body, &block)
           response.extend Web::HTTPResponse
           response
         end
       end
     end
 
-    alias_method :request_without_realweb, :request
-    alias_method :request, :request_with_realweb
+    alias_method :request_without_web, :request
+    alias_method :request, :request_with_web
 
     private
 

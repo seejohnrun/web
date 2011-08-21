@@ -1,12 +1,12 @@
-require File.dirname(__FILE__) + '/realweb/ext/net_http'
-require File.dirname(__FILE__) + '/realweb/faker'
+require File.dirname(__FILE__) + '/web/ext/net_http'
+require File.dirname(__FILE__) + '/web/faker'
 
 module Web
 
   # The adapters
-  autoload :RedisCache, File.dirname(__FILE__) + '/realweb/cache/redis_cache'
-  autoload :MemcachedCache, File.dirname(__FILE__) + '/realweb/cache/memcached_cache'
-  autoload :MemoryCache, File.dirname(__FILE__) + '/realweb/cache/memory_cache'
+  autoload :RedisCache, File.dirname(__FILE__) + '/web/cache/redis_cache'
+  autoload :MemcachedCache, File.dirname(__FILE__) + '/web/cache/memcached_cache'
+  autoload :MemoryCache, File.dirname(__FILE__) + '/web/cache/memory_cache'
 
   class << self
 
