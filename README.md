@@ -9,7 +9,7 @@ Web.register :get, /google\.com/
 By doing that, any request (via Net/HTTP - more adapters coming soon) is cached (in redis by default) and will return as if it hit the web service directly.
 
 ``` ruby
-Web.register :get, /google\.com/
+Web.register :any, /google\.com/
 Net::HTTP.get_print 'http://google.com' # from source
 Net::HTTP.get_print 'http://google.com' # from cache!
 ```

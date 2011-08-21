@@ -18,7 +18,8 @@ module Web
     # whether or not this is a key we want
     def desired?
       @match = Web.registered.detect do |opt|
-        opt[:regex] =~ @url && opt[:method] === @method
+        opt[:regex] =~ @url &&
+        (opt[:method] === @method || opt[:method] == :any)
       end
     end
 
