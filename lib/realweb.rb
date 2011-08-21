@@ -6,6 +6,7 @@ module RealWeb
   # The adapters
   autoload :RedisCache, File.dirname(__FILE__) + '/realweb/cache/redis_cache'
   autoload :MemcachedCache, File.dirname(__FILE__) + '/realweb/cache/memcached_cache'
+  autoload :MemoryCache, File.dirname(__FILE__) + '/realweb/cache/memory_cache'
 
   class << self
 

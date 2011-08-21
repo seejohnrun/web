@@ -26,7 +26,7 @@ To automatically expire requests to `google.com` every 2 seconds
 
 ## Different Caches
 
-There are multiple cache classes, and you can add your own.  By default, `RedisCache` and `MemcachedCache` are available.  Redis caching is the default, but if you want to change it you can do something like:
+There are multiple cache classes, and you can add your own.  By default, `MemoryCache`, `RedisCache` and `MemcachedCache` are available.  Redis caching is the default, but if you want to change it you can do something like:
 
 ``` ruby
 RealWeb.cache = RealWeb::MemcachedCache.new
