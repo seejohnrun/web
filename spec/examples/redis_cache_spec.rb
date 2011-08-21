@@ -20,10 +20,15 @@ describe Web do
       cache.get('hello').should == 'world'
     end
 
-    it 'should be able to set an expires and have it honored' do
+    it 'should not expire immediately' do
       cache = Web::RedisCache.new
       cache.set('hello', 'world', 1)
       cache.get('hello').should == 'world'
+    end
+
+    it 'should be able to set an expires and have it honored' do
+      cache = Web::RedisCache.new
+      cache.set('hello', 'world', 1)
       sleep 2
       cache.get('hello').should be_nil
     end

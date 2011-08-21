@@ -12,11 +12,16 @@ describe Web do
       Web.register :get, /google\.com/, :expire => 1
     end
 
-    it 'should expire a key after 1s' do
+    it 'should not expire immediately' do
       response = Net::HTTP.get_response URI.parse 'http://google.com'
       response.should_not be_cached
       response = Net::HTTP.get_response URI.parse 'http://google.com'
       response.should be_cached
+    end
+
+    it 'should expire a key after 1s' do
+      response = Net::HTTP.get_response URI.parse 'http://google.com'
+      response.should_not be_cached
       sleep 2
       response = Net::HTTP.get_response URI.parse 'http://google.com'
       response.should_not be_cached
