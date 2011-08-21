@@ -24,7 +24,7 @@ describe Web do
       cache = Web::RedisCache.new
       cache.set('hello', 'world', 1)
       cache.get('hello').should == 'world'
-      sleep 1.5
+      sleep 2
       cache.get('hello').should be_nil
     end
 
