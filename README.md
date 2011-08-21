@@ -6,7 +6,14 @@ RealWeb is a great way to automatically record HTTP responses in a cache so you 
 RealWeb.register /google\.com/
 ```
 
-By doing that, any request (via Net/HTTP - more adapters coming soon) is cached (in redis by default) and will return as if it hit the web service in the future.
+By doing that, any request (via Net/HTTP - more adapters coming soon) is cached (in redis by default) and will return as if it hit the web service directly.
+
+``` ruby
+RealWeb.register /google\.com/
+Net::HTTP.get_print 'http://google.com' # from source
+Net::HTTP.get_print 'http://google.com' # from cache!
+```
+
 
 ## Auto-expiry
 
