@@ -119,8 +119,8 @@ module Net
       protocol = use_ssl? ? 'https' : 'http'
       path = request.path
       path = URI.parse(request.path).request_uri if request.path =~ /^http/
-        # TODO handle basic auth
-      uri = "#{protocol}://#{address}:#{port}#{path}"
+      # TODO handle basic auth
+      "#{protocol}://#{address}:#{port}#{path}"
     end
 
   end
