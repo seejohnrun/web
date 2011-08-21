@@ -68,6 +68,28 @@ describe Web do
       headers.should == headers2
     end
 
+    it 'should be able to read the body of an uncached response' do
+      response = Net::HTTP.get_response URI.parse 'http://google.com'
+      lambda do
+        response.read_body
+      end.should_not raise_error
+    end
+
+    it 'should be able to read the body of an cached response' do
+      response = Net::HTTP.get_response URI.parse 'http://google.com'
+      response = Net::HTTP.get_response URI.parse 'http://google.com'
+      lambda do
+        response.read_body
+      end.should_not raise_error
+    end
+
+  end
+
+  it 'should be able to read the body of an unregistered response' do
+    response = Net::HTTP.get_response URI.parse 'http://google.com'
+    lambda do
+      response.read_body
+    end.should_not raise_error
   end
 
   it 'should not cache things that are not registered' do
