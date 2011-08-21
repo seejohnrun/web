@@ -34,7 +34,7 @@ Web.cache = Web::MemcachedCache.new
 
 ### Existing Cache Classes
 
-* `MemoryCache` - Caches to memory directly (does not support auto-expiry currently)
+* `MemoryCache` - Caches to memory directly
 * `RedisCache` - A cache backed by Redis
 * `MemcachedCache` - A cache backed by Memcached via Dalli
 

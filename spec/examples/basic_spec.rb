@@ -1,10 +1,9 @@
 require File.dirname(__FILE__) + '/../spec_helper'
-require 'redis'
 
 describe Web do
 
   before :each do
-    Redis.new.flushdb
+    Web.cache = Web::MemoryCache.new
   end
 
   describe 'with 1s expired url' do

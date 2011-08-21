@@ -3,16 +3,18 @@ module Web
   class MemoryCache
 
     def initialize
+      @expirations = {}
       @hash = {}
     end
 
     def get(key)
-      @hash[key]
+      expires = @expirations[key]
+      @hash[key] if expires.nil? || Time.now < expires
     end
 
     def set(key, value, expires = nil)
-      raise 'MemoryCache does not support key expiration' if expires
       @hash[key] = value
+      @expirations[key] = Time.now + expires if expires
     end
 
   end
