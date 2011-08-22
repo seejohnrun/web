@@ -68,7 +68,7 @@ module Net
             response[name] = value
           end
         end
-        response.extend Web::HTTPResponse
+        response.extend Web::ReadableHTTPResponse
         response.instance_variable_set(:@body, web_response.body)
         response.instance_variable_set(:@read, true)
         yield response if block_given?
@@ -83,7 +83,7 @@ module Net
           response.each do |key, value|
             headers[key] = value
           end
-          response.extend Web::HTTPResponse
+          response.extend Web::ReadableHTTPResponse
           web.record response.code.to_i, response.body, headers
           yield response if block_given?
           response

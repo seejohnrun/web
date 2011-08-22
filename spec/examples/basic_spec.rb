@@ -73,26 +73,23 @@ describe Web do
     end
 
     it 'should be able to read the body of an uncached response' do
-      response = Net::HTTP.get_response REQUEST_URL
       lambda do
-        response.read_body
+        response = Net::HTTP.get_print REQUEST_URL
       end.should_not raise_error
     end
 
     it 'should be able to read the body of an cached response' do
-      response = Net::HTTP.get_response REQUEST_URL
-      response = Net::HTTP.get_response REQUEST_URL
       lambda do
-        response.read_body
+        response = Net::HTTP.get_print REQUEST_URL
+        response = Net::HTTP.get_print REQUEST_URL
       end.should_not raise_error
     end
 
   end
 
   it 'should be able to read the body of an unregistered response' do
-    response = Net::HTTP.get_response REQUEST_URL
     lambda do
-      response.read_body
+      response = Net::HTTP.get_print REQUEST_URL
     end.should_not raise_error
   end
 
