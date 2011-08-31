@@ -5,17 +5,6 @@ require 'stringio'
 require File.dirname(__FILE__) + '/../status_codes'
 require File.dirname(__FILE__) + '/../http_response'
 
-module ReadableHTTPResponse
-
-  include Web::HTTPResponse
-
-  def read_body(dest = nil, &block)
-    yield @body if block_given?
-    @body
-  end
-
-end
-
 module Net
 
   class BufferedIO
@@ -122,6 +111,21 @@ module Net
       else
         "#{protocol}://#{address}:#{port}#{path}"
       end
+    end
+
+  end
+
+end
+
+module Web
+
+  module ReadableHTTPResponse
+
+    include HTTPResponse
+
+    def read_body(dest = nil, &block)
+      yield @body if block_given?
+      @body
     end
 
   end

@@ -31,7 +31,7 @@ module Web
 
     # Get the cache we're using
     def cache
-      @cache ||= RedisCache.new
+      @cache ||= MemoryCache.new
     end
 
   end

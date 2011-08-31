@@ -1,6 +1,6 @@
 # Web
 
-Web is a great way to automatically record HTTP responses in a cache so you don't overwhelm an external service.
+Web is a great way to automatically record HTTP responses in a cache so you don't overwhelm an external service. You can also share the responses between multiple adapters (like typhoeus and net/http) seamlessly.
 
 ``` ruby
 Web.register :get, /google\.com/
@@ -26,7 +26,7 @@ To automatically expire requests to `google.com` every 2 seconds
 
 ## Different Caches
 
-There are multiple cache classes, and you can add your own.  `RedisCache` caching is the default, but if you want to change it you can do something like:
+There are multiple cache classes, and you can add your own.  `MemoryCache` caching is the default, but if you want to change it you can do something like:
 
 ``` ruby
 Web.cache = Web::MemcachedCache.new
