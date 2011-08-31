@@ -1,4 +1,5 @@
-require File.dirname(__FILE__) + '/web/ext/net_http'
+require File.dirname(__FILE__) + '/web/ext/net_http' if defined?(Net::HTTP)
+require File.dirname(__FILE__) + '/web/ext/typhoeus' if defined?(Typhoeus)
 require File.dirname(__FILE__) + '/web/faker'
 
 module Web
@@ -17,6 +18,10 @@ module Web
       options[:method] = method
       options[:regex] = regex
       registered << options
+    end
+
+    def unregister_all
+      @registered = []
     end
 
     # an array of registrations

@@ -5,6 +5,7 @@ spec = Gem::Specification.new do |s|
   s.name = 'web'
   s.author = 'John Crepezzi'
   s.add_development_dependency('rspec')
+  s.add_development_dependency('typhoeus')
   s.description = 'web is a library for caching HTTP responses'
   s.email = 'john.crepezzi@gmail.com'
   s.files = Dir['lib/**/*.rb']

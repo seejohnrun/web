@@ -7,6 +7,10 @@ module Web
 
     attr_reader :cache, :key
 
+    # method is expected to be a symbol, downcase
+    # url is expected to be a full url, trailing slash chopped off
+    # body is expected to be nil or a string
+    # headers is expected to be a hash
     def initialize(method, url, body, headers)
       @key = "#{method}:#{url}"
       @cache = Web.cache
@@ -24,6 +28,9 @@ module Web
     end
 
     # Given a response, marshall down and record in redis
+    # code is expected to be Fixnum
+    # body is expected to be a string or nil
+    # headers is expected to be a hash
     def record(code, body, headers)
       # save and return the response
       res = Web::Response.new code, body, headers

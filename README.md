@@ -38,15 +38,20 @@ Web.cache = Web::MemcachedCache.new
 * `RedisCache` - A cache backed by Redis
 * `MemcachedCache` - A cache backed by Memcached via Dalli
 
+### Adapters
+
+There is currently support for the following adapters:
+
+* `typhoeus`
+* `net/http`
+
+It's easy to write new adapters, and the typhoeus adapter is a great example.  Give it a ready at `lib/web/ext/typhoeus.rb` and contribute one for another library, like `curb` or `patron`.
+
 ## Installation
 
 ``` bash
 gem install web
 ```
-
-## TODO
-
-* More library adapters - `typhoeus`, `curb`, `patron`, etc
 
 ## Author
 

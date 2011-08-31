@@ -5,6 +5,17 @@ require 'stringio'
 require File.dirname(__FILE__) + '/../status_codes'
 require File.dirname(__FILE__) + '/../http_response'
 
+module ReadableHTTPResponse
+
+  include Web::HTTPResponse
+
+  def read_body(dest = nil, &block)
+    yield @body if block_given?
+    @body
+  end
+
+end
+
 module Net
 
   class BufferedIO
@@ -104,8 +115,13 @@ module Net
       protocol = use_ssl? ? 'https' : 'http'
       path = request.path
       path = URI.parse(request.path).request_uri if request.path =~ /^http/
+      path = path.chop if path.end_with?('/') # remove trailing slashes in caching layer
       # TODO handle basic auth
-      "#{protocol}://#{address}:#{port}#{path}"
+      if (use_ssl? && port == 443) || (!use_ssl? && port == 80)
+        "#{protocol}://#{address}#{path}"
+      else
+        "#{protocol}://#{address}:#{port}#{path}"
+      end
     end
 
   end
